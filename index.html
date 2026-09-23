@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loopvity - 獨立 App 軟體工作室 | 實用工具研發</title>
+    <meta name="description" content="Loopvity 是一家獨立軟體工作室，專注於 iOS 與 Android 實用工具研發，堅持 100% 離線運行與隱私保護。首款旗艦工具 Prompt Vault 即將上架。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function(){try{if(localStorage.getItem('loopvity-theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}})();
+    </script>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { overflow-y: scroll; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; background-color: #f4f7fb; color: #111827; }
+        html.theme-dark body { background-color: #0b0f19; color: #f3f4f6; }
+        .gradient-brand { background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #9b51e0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-glass { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border: 1px solid rgba(15, 23, 42, 0.08); }
+        html.theme-dark .card-glass { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- 頂部懸浮導航列 -->
+    <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
+        <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+            <a href="index.html" class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-black text-lg">L</span>
+                <div class="flex items-center"><span class="text-xl font-black tracking-tight block leading-none pt-0.5">LOOPVITY</span></div>
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
+                <a href="index.html" class="text-cyan-600 transition">首頁</a>
+                <a href="cases.html" class="hover:text-cyan-600 transition">產品</a>
+                <a href="blog.html" class="hover:text-cyan-600 transition">Blog</a>
+                <a href="contact.html" class="hover:text-cyan-600 transition">聯絡我們</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index-en.html" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">EN</a>
+                <button type="button" class="theme-toggle" data-theme-toggle aria-label="切換至深色模式">
+                    <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+                    <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                </button>
+                <a href="https://wa.me/85200000000" target="_blank" class="hidden sm:flex items-center gap-2 bg-[#25D366] text-white px-5 py-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">
+                    <span>WhatsApp 查詢</span>
+                </a>
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-900 p-2 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <!-- 手機版下拉選單 -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-5 flex-col gap-4 text-sm font-bold text-gray-900 lg:hidden">
+                <a href="index.html" class="text-cyan-600 transition px-2 py-1 block">首頁</a>
+                <a href="cases.html" class="hover:text-cyan-600 transition px-2 py-1 block">產品</a>
+                <a href="blog.html" class="hover:text-cyan-600 transition px-2 py-1 block">Blog</a>
+                <a href="contact.html" class="hover:text-cyan-600 transition px-2 py-1 block">聯絡我們</a>
+                <a href="index-en.html" class="text-gray-500 hover:text-cyan-600 transition px-2 py-1 block font-bold">English (EN)</a>
+                <a href="https://wa.me/85200000000" target="_blank" class="sm:hidden flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 mt-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">WhatsApp 查詢</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <!-- Hero 區塊 -->
+        <section class="max-w-5xl mx-auto px-6 pt-24 md:pt-32 pb-16 text-center flex flex-col items-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold text-cyan-400 bg-cyan-500/10 rounded-full border border-cyan-500/20">
+                Independent App Studio · Hong Kong
+            </div>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-8 leading-tight sm:leading-snug">
+                專注實用工具開發 <br class="hidden sm:block">
+                <span class="gradient-brand mt-2 inline-block">打造純粹、隱私優先的獨立 App</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-normal">
+                Loopvity 是一家專注於研發行動應用與效率工具的獨立工作室。我們堅持以人為本的極簡設計與 100% 離線數據安全架構。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md">
+                <a href="cases.html" class="w-full sm:w-auto flex-1 bg-white text-gray-950 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition text-center shadow-lg">探索產品</a>
+                <a href="contact.html" class="w-full sm:w-auto flex-1 bg-zinc-900 border border-zinc-700 text-white px-8 py-3.5 rounded-full font-bold hover:bg-zinc-800 transition text-center">聯絡我們</a>
+            </div>
+        </section>
+
+        <!-- 真實核心指標 -->
+        <section class="max-w-6xl mx-auto px-6 py-10 border-y border-zinc-800/50 my-6 bg-gradient-to-r from-transparent via-zinc-900/30 to-transparent">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">100%</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">離線運行架構</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">0%</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">數據追蹤與上傳</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">Dual</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">iOS 與 Android 支援</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">Local</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">數據完全自主掌控</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 旗艦應用展示：Prompt Vault -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Our Product</h2>
+                <h3 class="text-3xl sm:text-4xl font-black">旗艦產品展示</h3>
+            </div>
+
+            <div class="card-glass rounded-3xl border border-zinc-800 p-8 md:p-12 overflow-hidden relative">
+                <div class="flex flex-col lg:flex-row gap-10 items-center justify-between">
+                    <div class="w-full lg:w-3/5">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full uppercase tracking-wider">iOS &amp; Android 雙平台</span>
+                            <span class="text-xs text-yellow-400 font-bold bg-yellow-400/10 px-3 py-1 rounded-full animate-pulse">即將上架 Coming Soon</span>
+                        </div>
+                        <h4 class="text-3xl sm:text-4xl font-black text-white mb-4 flex items-center gap-3">
+                            <span class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-2xl shadow-lg">⚡️</span>
+                            Prompt Vault 提示詞收納庫
+                        </h4>
+                        <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
+                            專為頻繁使用 ChatGPT、Claude、Midjourney 等 AI 工具的創作者設計。解決指令模板散亂、頻繁手動修改變數等痛點。支援手勢極速複製、動態變數合成與 15 次修改歷史還原，100% 離線保護隱私。
+                        </p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-gray-300 mb-8">
+                            <div class="bg-zinc-900/80 p-3 rounded-xl border border-zinc-800 text-center font-semibold">雙擊極速複製</div>
+                            <div class="bg-zinc-900/80 p-3 rounded-xl border border-zinc-800 text-center font-semibold">動態變數即時合成</div>
+                            <div class="bg-zinc-900/80 p-3 rounded-xl border border-zinc-800 text-center font-semibold">單鍵 JSON 匯出備份</div>
+                        </div>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <a href="cases.html" class="bg-white text-gray-950 px-8 py-3 rounded-full font-bold text-sm hover:bg-gray-200 transition shadow-lg">探索產品詳情</a>
+                            <span class="text-xs text-gray-500 font-mono">App Store &amp; Google Play 即將開放下載</span>
+                        </div>
+                    </div>
+                    <!-- 預告卡片 -->
+                    <div class="w-full lg:w-2/5 flex flex-col items-center justify-center bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 text-center">
+                        <div class="text-6xl mb-4">📱</div>
+                        <div class="text-lg font-black text-white mb-2">開發就緒 · 上架準備中</div>
+                        <p class="text-xs text-gray-400 mb-6 leading-relaxed">首款獨立應用即將發布，未來將持續打造多元實用工具。</p>
+                        <div class="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 bg-cyan-500/10 px-4 py-2 rounded-full border border-cyan-500/20">
+                            <span>🚀 更多 App 籌備中</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 研發原則 -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-8 md:p-12">
+                <div class="text-center mb-10">
+                    <h3 class="text-2xl sm:text-3xl font-black text-white">我們的產品研發原則</h3>
+                    <p class="text-gray-400 text-sm mt-3">專注打造值得用戶信賴與長期使用的工具軟體。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-inner">🔒</div>
+                        <h4 class="font-bold text-white mb-2">離線安全與隱私第一</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">絕不收集或轉移用戶隱私。所有數據存放在手機本地，給用戶最高級別的掌控感。</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-inner">⚡️</div>
+                        <h4 class="font-bold text-white mb-2">直觀流暢的操作體驗</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">拋棄繁瑣多餘的設定，專注核心任務的直覺交互，讓工具真正為效率服務。</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-zinc-800 rounded-full flex items-center justify-center text-2xl mb-4 shadow-inner">💎</div>
+                        <h4 class="font-bold text-white mb-2">透明合理的定價模式</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">未來付費 App 或增值功能均堅持清晰透明的定價原則，提供持續穩定的更新維護。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 最新 Blog 預覽 -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Blog Posts</h2>
+                    <h3 class="text-3xl font-black">最新技術與產品日誌</h3>
+                </div>
+                <a href="blog.html" class="hidden sm:inline-block text-sm font-bold text-gray-400 hover:text-white transition">查看全部文章 →</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Blog 1: Prompt Vault 介紹 -->
+                <a href="article-prompt-vault.html" class="card-glass p-7 rounded-2xl border border-zinc-800 hover:border-cyan-400 transition-all duration-300 group block">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">產品專文</span>
+                        <span class="text-xs text-gray-500 font-mono">2026-09-23</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3 leading-snug group-hover:text-cyan-400 transition">
+                        ⚡️ Prompt Vault：為 AI 重度使用者打造的 100% 離線提示詞收納庫
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        詳細介紹 Prompt Vault 的核心設計理念：告別散亂記事簿，結合動態變數合成、雙擊極速複製與本機版本歷史。
+                    </p>
+                    <span class="text-xs text-cyan-400 font-bold group-hover:underline">閱讀全文 →</span>
+                </a>
+
+                <!-- Blog 2: APP 開發選型 -->
+                <a href="article-app-native-vs-cross.html" class="card-glass p-7 rounded-2xl border border-zinc-800 hover:border-cyan-400 transition-all duration-300 group block">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold text-blue-400 bg-blue-400/10 px-3 py-1 rounded-full">APP 開發</span>
+                        <span class="text-xs text-gray-500 font-mono">2026-09-20</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3 leading-snug group-hover:text-cyan-400 transition">
+                        APP 開發選型分析：原生開發與跨平台框架評估
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        探討原生語言與現代跨平台框架在獨立軟體開發中的權衡，分析週期、性能與長期維護成本。
+                    </p>
+                    <span class="text-xs text-cyan-400 font-bold group-hover:underline">閱讀全文 →</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-12">
+        <div>&copy; 2026 Loopvity Studio. All rights reserved.</div>
+        <div class="flex gap-4 sm:gap-6 flex-wrap justify-center">
+            <a href="mailto:loopvity@gmail.com" class="hover:text-gray-300 transition">loopvity@gmail.com</a>
+            <a href="terms.html" class="hover:text-gray-300 transition">條款及細則</a>
+            <a href="privacy.html" class="hover:text-gray-300 transition">私隱政策</a>
+            <a href="cookie.html" class="hover:text-gray-300 transition">Cookie 政策</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
+            document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.add('hidden'); menu.classList.remove('flex'); } });
+        });
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>

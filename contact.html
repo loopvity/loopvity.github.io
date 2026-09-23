@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯絡我們 | Loopvity</title>
+    <meta name="description" content="聯絡 Loopvity 獨立軟體工作室。我們為旗下自研 App 提供技術支援、Bug 錯誤回報、新功能建議與付費諮詢。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function(){try{if(localStorage.getItem('loopvity-theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}})();
+    </script>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { overflow-y: scroll; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; background-color: #f4f7fb; color: #111827; }
+        html.theme-dark body { background-color: #0b0f19; color: #f3f4f6; }
+        .gradient-brand { background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #9b51e0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-glass { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border: 1px solid rgba(15, 23, 42, 0.08); }
+        html.theme-dark .card-glass { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- 頂部懸浮導航列 -->
+    <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
+        <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+            <a href="index.html" class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-black text-lg">L</span>
+                <div class="flex items-center"><span class="text-xl font-black tracking-tight block leading-none pt-0.5">LOOPVITY</span></div>
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
+                <a href="index.html" class="hover:text-cyan-600 transition">首頁</a>
+                <a href="cases.html" class="hover:text-cyan-600 transition">產品</a>
+                <a href="blog.html" class="hover:text-cyan-600 transition">Blog</a>
+                <!-- 聯絡我們 高亮 -->
+                <a href="contact.html" class="text-cyan-600 transition">聯絡我們</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="contact-en.html" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">EN</a>
+                <button type="button" class="theme-toggle" data-theme-toggle aria-label="切換至深色模式">
+                    <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+                    <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                </button>
+                <a href="https://wa.me/85200000000" target="_blank" class="hidden sm:flex items-center gap-2 bg-[#25D366] text-white px-5 py-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">
+                    <span>WhatsApp 查詢</span>
+                </a>
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-900 p-2 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <!-- 手機版下拉選單 -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-5 flex-col gap-4 text-sm font-bold text-gray-900 lg:hidden">
+                <a href="index.html" class="hover:text-cyan-600 transition px-2 py-1 block">首頁</a>
+                <a href="cases.html" class="hover:text-cyan-600 transition px-2 py-1 block">產品</a>
+                <a href="blog.html" class="hover:text-cyan-600 transition px-2 py-1 block">Blog</a>
+                <a href="contact.html" class="text-cyan-600 transition px-2 py-1 block">聯絡我們</a>
+                <a href="contact-en.html" class="text-gray-500 hover:text-cyan-600 transition px-2 py-1 block font-bold">English (EN)</a>
+                <a href="https://wa.me/85200000000" target="_blank" class="sm:hidden flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 mt-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">WhatsApp 查詢</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1 w-full">
+        <!-- Hero 區塊 -->
+        <section class="max-w-5xl mx-auto px-6 pt-28 md:pt-36 pb-16 text-center flex flex-col items-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold text-cyan-400 bg-cyan-500/10 rounded-full border border-cyan-500/20">
+                Contact &amp; Support
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-8 leading-tight sm:leading-snug">
+                聯絡我們 <br class="hidden sm:block">
+                <span class="gradient-brand mt-2 inline-block">我們隨時為您提供協助</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mb-14 leading-relaxed font-normal">
+                如果您在使用 Loopvity 旗下任何應用程式時遇到問題、發現 Bug 或有新功能提案，歡迎隨時透過下方表單或直接聯絡我們。
+            </p>
+
+            <!-- 聯絡管道卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left w-full mb-16">
+                <!-- WhatsApp 快速客服 -->
+                <div class="card-glass p-8 rounded-3xl flex flex-col justify-center items-center text-center hover:border-[#25D366]/50 transition cursor-pointer" onclick="window.open('https://wa.me/85200000000', '_blank')">
+                    <div class="w-16 h-16 rounded-full bg-[#25D366]/10 text-[#25D366] flex items-center justify-center text-3xl mb-4">💬</div>
+                    <h3 class="text-xl font-bold text-white mb-2">WhatsApp 即時支援</h3>
+                    <p class="text-gray-400 text-sm mb-6">適合快速提問與即時交流，由開發團隊直接解答。</p>
+                    <span class="text-xs font-bold bg-[#25D366] text-white px-6 py-2.5 rounded-full">傳送訊息</span>
+                </div>
+
+                <!-- Email 直接聯繫 -->
+                <div class="card-glass p-8 rounded-3xl flex flex-col justify-center items-center text-center hover:border-cyan-500/50 transition cursor-pointer" onclick="window.location.href='mailto:loopvity@gmail.com'">
+                    <div class="w-16 h-16 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl mb-4">✉️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">技術支援信箱</h3>
+                    <p class="text-gray-400 text-sm mb-6">適合傳送附帶截圖的 Bug 回報、詳細功能提案或合作交流。</p>
+                    <span class="text-xs font-bold bg-white text-gray-900 px-6 py-2.5 rounded-full">loopvity@gmail.com</span>
+                </div>
+            </div>
+
+            <!-- 防臃腫雙層下拉表單架構 -->
+            <div class="w-full card-glass p-8 md:p-12 rounded-3xl text-left border border-zinc-800">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-black text-white mb-2">提交支援工單或訊息</h3>
+                    <p class="text-sm text-gray-400">請填寫您的聯絡資訊與具體問題，我們通常在 12 小時內回覆。</p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); alert('感謝您的訊息！我們已收到您的反饋，將盡快透過電子郵件與您聯繫。');" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">您的稱呼 *</label>
+                            <input type="text" required placeholder="例如：Alex / 陳先生" class="w-full bg-zinc-900/80 border border-zinc-700/80 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">電子郵件 *</label>
+                            <input type="email" required placeholder="例如：yourname@example.com" class="w-full bg-zinc-900/80 border border-zinc-700/80 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition">
+                        </div>
+                    </div>
+
+                    <!-- 雙層架構：目標 App + 問題性質 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">相關應用 (App) *</label>
+                            <select id="target-app" class="w-full bg-zinc-900/80 border border-zinc-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-cyan-500 transition">
+                                <option value="prompt-vault">Prompt Vault 提示詞收納庫</option>
+                                <option value="general">其他 / 全體通用諮詢</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">問題性質 *</label>
+                            <select id="issue-category" class="w-full bg-zinc-900/80 border border-zinc-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-cyan-500 transition">
+                                <option value="support">使用疑問與操作指引</option>
+                                <option value="bug">Bug 錯誤回報與異常</option>
+                                <option value="feature">新功能建議與反饋</option>
+                                <option value="billing">購買、付費或訂閱相關</option>
+                                <option value="partnership">其他商業或交流合作</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">使用裝置與作業系統 (選填)</label>
+                        <input type="text" placeholder="例如：iPhone 15 (iOS 17.5) 或 Pixel 8 (Android 14)" class="w-full bg-zinc-900/80 border border-zinc-700/80 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">詳細說明內容 *</label>
+                        <textarea rows="4" required placeholder="請具體說明您遇到的問題、操作重現步驟或期望的功能..." class="w-full bg-zinc-900/80 border border-zinc-700/80 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-4 rounded-xl hover:brightness-110 transition shadow-lg shadow-cyan-500/20 text-sm">
+                        送出支援訊息
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 常見問題解答 (FAQ) -->
+        <section class="max-w-3xl mx-auto px-6 py-16">
+            <div class="text-center mb-10">
+                <h3 class="text-2xl sm:text-3xl font-black text-white">常見問題解答 (FAQ)</h3>
+                <p class="text-gray-400 text-sm mt-3">快速解決您在技術支援與購買時的常見疑惑。</p>
+            </div>
+
+            <div class="space-y-4">
+                <details class="group card-glass rounded-2xl cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
+                        <span>1. 遇到 App 異常閃退或手勢失效時該如何快速排查？</span>
+                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
+                    </summary>
+                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
+                        建議先檢查 Apple App Store 或 Google Play 是否有最新版本可供更新。若問題依然存在，請透過上方表單提交「Bug 錯誤回報」，附上您的手機型號與系統版本，這將有助於開發團隊迅速定位並在下一個修正版本中推送更新。
+                    </div>
+                </details>
+
+                <details class="group card-glass rounded-2xl cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
+                        <span>2. 關於付費下載與應用內購 (IAP) 的退款處理機制？</span>
+                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
+                    </summary>
+                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
+                        所有付費下載與應用內購帳務均由 Apple 或 Google 官方金流系統直接處理。若需申請退款，可直接前往 Apple 官方的 reportaproblem.apple.com 或 Google Play 的帳戶訂單記錄頁面提出申請。如需核對購買證明亦可隨時聯絡我們協助。
+                    </div>
+                </details>
+
+                <details class="group card-glass rounded-2xl cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
+                        <span>3. 如果我在使用或購買過程中遇到問題，通常多久能獲得回覆？</span>
+                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
+                    </summary>
+                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
+                        透過 WhatsApp 傳送之查詢，在工作時間內通常可在數小時內獲得即時對話；透過表單或電子郵件提交之問題工單，開發團隊會在 12 至 24 小時內仔細審閱並給予具體回覆。
+                    </div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-12">
+        <div>&copy; 2026 Loopvity Studio. All rights reserved.</div>
+        <div class="flex gap-4 sm:gap-6 flex-wrap justify-center">
+            <a href="mailto:loopvity@gmail.com" class="hover:text-gray-300 transition">loopvity@gmail.com</a>
+            <a href="terms.html" class="hover:text-gray-300 transition">條款及細則</a>
+            <a href="privacy.html" class="hover:text-gray-300 transition">私隱政策</a>
+            <a href="cookie.html" class="hover:text-gray-300 transition">Cookie 政策</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
+            document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.add('hidden'); menu.classList.remove('flex'); } });
+            
+            // 偵測網址參數自動預設選項
+            const urlParams = new URLSearchParams(window.location.search);
+            const appEl = document.getElementById('target-app');
+            const categoryEl = document.getElementById('issue-category');
+            if (urlParams.get('app') === 'prompt-vault') {
+                appEl.value = 'prompt-vault';
+            }
+            if (urlParams.get('type') === 'feature') {
+                categoryEl.value = 'feature';
+            }
+        });
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>
