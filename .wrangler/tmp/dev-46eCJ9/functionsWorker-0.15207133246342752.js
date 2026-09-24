@@ -2521,9 +2521,17 @@ async function handleAdminApi(request, env2, path) {
   if (path === "/api/admin/pages" && method === "GET") {
     const kind = new URL(request.url).searchParams.get("kind") || "page";
     const { results } = await env2.DB.prepare(
-      "SELECT id, slug, locale, kind, title, status, updated_at, published_at, show_in_nav FROM pages WHERE kind = ? ORDER BY sort_order, id"
+      "SELECT id, slug, locale, kind, title, status, updated_at, published_at, show_in_nav, sort_order, pair_slug, category, cover FROM pages WHERE kind = ? ORDER BY sort_order, id"
     ).bind(kind).all();
     return json({ items: results || [] });
+  }
+  if (path === "/api/admin/pages/reorder" && method === "POST") {
+    assertSameOrigin(request);
+    const body = await request.json();
+    for (const item of body.items || []) {
+      await env2.DB.prepare("UPDATE pages SET sort_order = ? WHERE id = ?").bind(Number(item.sort_order) || 0, Number(item.id)).run();
+    }
+    return json({ ok: true });
   }
   if (path === "/api/admin/pages" && method === "POST") {
     assertSameOrigin(request);

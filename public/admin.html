@@ -97,7 +97,42 @@
     .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; }
     .badge.ok { background: var(--ok-bg); color: var(--ok); }
     .badge.warn { background: var(--warn-bg); color: var(--warn); }
-    .badge.neutral { background: #eef0f3; color: #3f4650; }
+    .list-toolbar { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 8px 18px; border-bottom: 1px solid var(--line); background: #fafbfc; }
+    .text-action { border: 0; background: transparent; color: #0f5f59; font-weight: 650; padding: 6px 0; box-shadow: none; min-height: 0; }
+    .text-action:hover { text-decoration: underline; }
+    .select-bar { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+    .select-bar[hidden] { display: none; }
+    .page-card { display: flex; align-items: flex-start; gap: 8px; padding: 16px 18px; border-bottom: 1px solid var(--line); background: #fff; }
+    .page-card.dragging { position: relative; z-index: 2; opacity: .92; box-shadow: 0 12px 28px rgba(16, 24, 40, .12); background: #fff; }
+    .drag-handle { width: 28px; margin-top: 2px; border: 0; background: transparent; color: #9aa1ab; cursor: grab; display: grid; place-items: center; padding: 8px 0; box-shadow: none; }
+    .drag-handle svg { width: 16px; height: 16px; fill: currentColor; stroke: none; }
+    .card-body { flex: 1; min-width: 0; }
+    .page-card:last-child { border-bottom: 0; }
+    .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .card-heading { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+    .card-heading h3, .card-top h3 { margin: 0; font-size: 16px; letter-spacing: -0.02em; min-width: 0; }
+    .lang-toggle { display: inline-flex; align-items: center; padding: 3px; background: #eef0f3; border-radius: 999px; flex: none; }
+    .lang-toggle button { border: 0; background: transparent; min-height: 28px; height: 28px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #61656c; box-shadow: none; }
+    .lang-toggle button.on { background: #fff; color: #111827; box-shadow: 0 1px 2px rgba(16, 24, 40, .08); }
+    .lang-line.active { background: #fff; }
+    .edit-title-row { display: flex; align-items: flex-start; gap: 16px; }
+    .edit-title-row .writer-title { flex: 1; margin-top: 24px; }
+    .edit-title-row .lang-toggle { margin-top: 32px; }
+    .move-pair { display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+    .move-pair button { width: 34px; height: 32px; border: 0; background: #fff; color: #3f4650; display: grid; place-items: center; }
+    .move-pair button + button { border-left: 1px solid var(--line); }
+    .move-pair button:hover:not(:disabled) { background: #f3faf8; color: #0f5f59; }
+    .move-pair button:disabled { color: #c5cad3; cursor: default; }
+    .move-pair svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+    .lang-panel { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fafbfc; }
+    .lang-line { display: grid; grid-template-columns: 18px minmax(140px, 1fr) auto auto; align-items: center; gap: 12px; padding: 10px 12px; }
+    .lang-line[hidden], .page-card[hidden] { display: none !important; }
+    .lang-line + .lang-line { border-top: 1px solid var(--line); }
+    .lang-name { font-size: 12px; font-weight: 700; color: #0f5f59; }
+    .lang-url { color: var(--muted); font-size: 13px; }
+    .pick-label { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-weight: 650; color: #3f4650; }
+    input.pick { width: 16px; height: 16px; padding: 0; margin: 0; border-radius: 4px; accent-color: #0f766e; box-shadow: none; }
+    .page-thumb, .page-mark { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; background: #e7f3f1; display: grid; place-items: center; font-size: 18px; flex: none; }
     .field { margin-bottom: 18px; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
     .row.three { grid-template-columns: 1.2fr .8fr .8fr; }
@@ -359,29 +394,165 @@
     async function viewList(kind) {
       const data = await api("/api/admin/pages?kind=" + kind);
       const isPost = kind === "post";
-      const rows = data.items.map((p) => `<tr>
-        <td class="title-cell">${esc(p.title)}</td>
-        <td class="muted">/${esc(p.slug)}.html</td>
-        <td>${p.locale === "en" ? "English" : "繁體中文"}</td>
-        <td>${statusBadge(p.status)}</td>
-        <td><div class="actions"><button class="btn-secondary btn-sm" data-edit="${p.id}">編輯</button><a class="btn-secondary btn-sm" href="/${esc(p.slug)}.html" target="_blank">檢視前台</a></div></td>
-      </tr>`).join("");
+      const items = data.items || [];
+      const bySlug = new Map(items.map((p) => [p.slug, p]));
+      const used = new Set();
+      const groups = [];
+      for (const page of items) {
+        if (used.has(page.id)) continue;
+        const partner = page.pair_slug ? bySlug.get(page.pair_slug) : null;
+        if (partner && partner.id !== page.id && !used.has(partner.id) && (!partner.pair_slug || partner.pair_slug === page.slug)) {
+          const zh = page.locale !== "en" ? page : partner;
+          const en = page.locale === "en" ? page : partner;
+          used.add(page.id); used.add(partner.id);
+          groups.push({ pages: [zh, en] });
+        } else {
+          used.add(page.id);
+          groups.push({ pages: [page] });
+        }
+      }
+      const image = (page) => {
+        const cover = String(page.cover || "");
+        if (cover.startsWith("/") || cover.startsWith("http")) return `<img class="page-thumb" src="${esc(cover)}" alt="">`;
+        return "";
+      };
+      const grip = `<svg viewBox="0 0 16 16"><circle cx="5" cy="3.5" r="1.15"/><circle cx="11" cy="3.5" r="1.15"/><circle cx="5" cy="8" r="1.15"/><circle cx="11" cy="8" r="1.15"/><circle cx="5" cy="12.5" r="1.15"/><circle cx="11" cy="12.5" r="1.15"/></svg>`;
+      const line = (page) => `<div class="lang-line" data-locale="${page.locale === "en" ? "en" : "zh"}" ${page.locale === "en" ? "hidden" : ""}>
+        <label class="pick-label"><input class="pick" type="checkbox" data-id="${page.id}" aria-label="選取 ${esc(page.slug)}"></label>
+        <span class="lang-url">/${esc(page.slug)}.html</span>
+        ${statusBadge(page.status)}
+        <span class="actions"><button class="btn-secondary btn-sm" data-edit="${page.id}">編輯</button><a class="btn-secondary btn-sm" href="/${esc(page.slug)}.html" target="_blank">檢視前台</a></span>
+      </div>`;
+      const cards = groups.map((group, index) => {
+        const zh = group.pages.find((p) => p.locale !== "en");
+        const en = group.pages.find((p) => p.locale === "en");
+        const lead = zh || en || group.pages[0];
+        const titleZh = zh ? (zh.title || zh.slug) : "";
+        const titleEn = en ? (en.title || en.slug) : "";
+        return `<article class="page-card" data-index="${index}">
+          ${isPost ? "" : `<button type="button" class="drag-handle" aria-label="按住拖動">${grip}</button>`}
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-heading">
+                ${image(lead)}
+                <h3 data-zh="${esc(titleZh)}" data-en="${esc(titleEn)}">${esc(titleZh || titleEn)}</h3>
+              </div>
+            </div>
+            <div class="lang-panel">${group.pages.map(line).join("")}</div>
+          </div>
+        </article>`;
+      }).join("");
       layout(isPost ? "posts" : "pages", `
-        ${head(isPost ? "網誌文章" : "頁面", isPost ? "撰寫、發佈及管理網誌。已發佈文章會出現在網誌列表與首頁。" : "管理網站各個頁面的內容、導覽與搜尋資料。",
+        ${head(isPost ? "網誌文章" : "頁面", isPost ? "用上方切換只看中文或 English。" : "用上方切換只看中文或 English。按住左側把手可拖動順序。",
           `<button class="btn-primary" id="create">${isPost ? "新增文章" : "新增頁面"}</button>`)}
         <div class="table-wrap">
         <label class="list-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search" placeholder="搜尋標題、網址或語言" aria-label="搜尋"></label>
-        <table>
-          <thead><tr><th>標題</th><th>網址</th><th>語言</th><th>狀態</th><th>操作</th></tr></thead>
-          <tbody>${rows || `<tr><td colspan="5"><div class="empty">尚未建立${isPost ? "文章" : "頁面"}。</div></td></tr>`}</tbody>
-        </table></div>`);
+        <div class="list-toolbar">
+          <div class="lang-toggle" id="list-lang">
+            <button type="button" class="on" data-list-lang="zh">中文</button>
+            <button type="button" data-list-lang="en">EN</button>
+          </div>
+          <label class="pick-label"><input class="pick" type="checkbox" id="select-all"><span>全選</span></label>
+          <button class="text-action" type="button" id="select-visible">選取顯示項目</button>
+          <div class="select-bar" id="select-bar" hidden>
+            <span class="muted" id="selected-count"></span>
+            <button class="text-action" type="button" id="select-none">取消全選</button>
+            <button class="btn-danger btn-sm" type="button" id="delete-selected">刪除</button>
+          </div>
+        </div>
+        <div class="page-list">${cards || `<div class="empty">尚未建立${isPost ? "文章" : "頁面"}。</div>`}</div>
+        </div>`);
+      const picks = () => [...app.querySelectorAll(".lang-line")].filter((line) => !line.hidden && !line.closest(".page-card").hidden).map((line) => line.querySelector(".pick"));
+      const applyListLang = (locale) => {
+        app.querySelectorAll("#list-lang button").forEach((button) => button.classList.toggle("on", button.dataset.listLang === locale));
+        app.querySelectorAll(".page-card").forEach((card) => {
+          const heading = card.querySelector("h3");
+          const line = card.querySelector(`.lang-line[data-locale="${locale}"]`);
+          card.querySelectorAll(".lang-line").forEach((item) => {
+            item.hidden = item.dataset.locale !== locale;
+            const box = item.querySelector(".pick");
+            if (box && item.hidden) box.checked = false;
+          });
+          card.hidden = !line;
+          if (heading && line) heading.textContent = locale === "en" ? heading.dataset.en : heading.dataset.zh;
+        });
+        refreshCount();
+      };
+      app.querySelectorAll("#list-lang button").forEach((button) => button.onclick = () => applyListLang(button.dataset.listLang));
+      const master = app.querySelector("#select-all");
+      const refreshCount = () => {
+        const all = picks();
+        const n = all.filter((el) => el.checked).length;
+        const bar = app.querySelector("#select-bar");
+        const count = app.querySelector("#selected-count");
+        if (bar) bar.hidden = !n;
+        if (count) count.textContent = n ? `已選取 ${n} 項` : "";
+        if (master) {
+          master.checked = n > 0 && n === all.length;
+          master.indeterminate = n > 0 && n < all.length;
+        }
+      };
+      master.onchange = () => { picks().forEach((el) => { el.checked = master.checked; }); refreshCount(); };
+      app.querySelector("#select-none").onclick = () => { picks().forEach((el) => { el.checked = false; }); refreshCount(); };
+      app.querySelector("#select-visible").onclick = () => {
+        app.querySelectorAll(".page-card").forEach((card) => {
+          if (card.hidden) return;
+          card.querySelectorAll(".pick").forEach((el) => { el.checked = true; });
+        });
+        refreshCount();
+      };
+      picks().forEach((el) => el.onchange = refreshCount);
+      app.querySelector("#delete-selected").onclick = async () => {
+        const ids = picks().filter((el) => el.checked).map((el) => el.dataset.id);
+        if (!ids.length || !confirm(`刪除已選取的 ${ids.length} 項？刪除後無法從控制台復原。`)) return;
+        for (const id of ids) await api("/api/admin/pages/" + id, { method: "DELETE" });
+        viewList(kind);
+      };
+      app.querySelectorAll(".drag-handle").forEach((handle) => handle.onpointerdown = (start) => {
+        if (start.button != null && start.button !== 0) return;
+        start.preventDefault();
+        const card = handle.closest(".page-card");
+        const list = app.querySelector(".page-list");
+        let dragging = false;
+        const timer = setTimeout(() => { dragging = true; card.classList.add("dragging"); }, 280);
+        const move = (event) => {
+          if (!dragging) {
+            if (Math.abs(event.clientY - start.clientY) > 8) clearTimeout(timer);
+            return;
+          }
+          const cards = [...list.querySelectorAll(".page-card:not([hidden])")];
+          const target = cards.find((item) => {
+            if (item === card) return false;
+            const rect = item.getBoundingClientRect();
+            return event.clientY > rect.top && event.clientY < rect.bottom;
+          });
+          if (!target) return;
+          const mid = target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
+          target.parentNode.insertBefore(card, event.clientY < mid ? target : target.nextSibling);
+        };
+        const up = async () => {
+          clearTimeout(timer);
+          window.removeEventListener("pointermove", move);
+          window.removeEventListener("pointerup", up);
+          if (!dragging) return;
+          card.classList.remove("dragging");
+          const indexes = [...list.querySelectorAll(".page-card")].map((item) => Number(item.dataset.index));
+          const order = indexes.map((index) => groups[index]);
+          const payload = [];
+          order.forEach((group, i) => group.pages.forEach((page) => payload.push({ id: page.id, sort_order: i })));
+          await api("/api/admin/pages/reorder", { method: "POST", body: JSON.stringify({ items: payload }) });
+          viewList(kind);
+        };
+        window.addEventListener("pointermove", move);
+        window.addEventListener("pointerup", up);
+      });
       app.querySelectorAll("[data-edit]").forEach((b) => b.onclick = () => route("edit", b.dataset.edit));
       app.querySelector("#create").onclick = () => route("edit", "new:" + kind);
       const search = app.querySelector("#search");
       search.oninput = () => {
         const q = search.value.trim().toLowerCase();
-        app.querySelectorAll("tbody tr").forEach((tr) => {
-          tr.hidden = q && !tr.textContent.toLowerCase().includes(q);
+        app.querySelectorAll(".page-card").forEach((card) => {
+          card.hidden = q && !card.textContent.toLowerCase().includes(q);
         });
       };
     }
@@ -435,9 +606,14 @@
       const page = creating ? {
         kind, locale: "zh", status: "published", robots: "index,follow", show_in_nav: 0,
         content_html: "", sections_json: "[]",
-        main_class: "flex-1 w-full", published_at: new Date().toISOString().slice(0, 10), cover: "📝"
+        main_class: "flex-1 w-full", published_at: new Date().toISOString().slice(0, 10), cover: ""
       } : await api("/api/admin/pages/" + id);
       const isPost = page.kind === "post";
+      let partner = null;
+      if (!creating && page.pair_slug) {
+        const list = await api("/api/admin/pages?kind=" + page.kind);
+        partner = (list.items || []).find((item) => item.slug === page.pair_slug) || null;
+      }
       const managed = creating || String(page.content_html || "").includes("<!--CMS_SECTIONS-->");
       let sections = [];
       try { sections = JSON.parse(page.sections_json || "[]"); } catch { sections = []; }
@@ -510,13 +686,28 @@
               <div class="writer-stats" id="writer-stats">0 字 · 閱讀時間：0 分鐘</div>
             </div>
           </div>
-          <div class="writer-title" id="writer-title" contenteditable="true" data-placeholder="${isPost ? "輸入文章標題..." : "輸入頁面標題..."}"></div>
+          <div class="edit-title-row">
+            <div class="writer-title" id="writer-title" contenteditable="true" data-placeholder="${isPost ? "輸入文章標題..." : "輸入頁面標題..."}"></div>
+            <div class="lang-toggle" id="edit-lang" title="切換中英文">
+              <button type="button" data-locale="zh" class="${page.locale === "en" ? "" : "on"}">中文</button>
+              <button type="button" data-locale="en" class="${page.locale === "en" ? "on" : ""}">EN</button>
+            </div>
+          </div>
           <div class="doc-layout">
             <div class="doc" id="doc"></div>
           </div>
           <div class="slash-menu" id="slash" hidden></div>
         </section>
-        <section class="card" id="pane-html" hidden><div class="section-head"><h2>HTML</h2><p>與正文分開填寫。只有這裡有內容時會直接儲存；兩邊都有內容時會先詢問。</p></div>${field("HTML 內容", "content_html", managed ? "" : (page.content_html || ""), "code")}</section>
+        <section class="card" id="pane-html" hidden>
+          <div class="section-head edit-title-row" style="margin-top:0">
+            <div><h2>HTML</h2><p>與正文分開填寫，並跟隨上方的中英文。只有這裡有內容時會直接儲存；兩邊都有內容時會先詢問。</p></div>
+            <div class="lang-toggle" id="html-lang">
+              <button type="button" data-locale="zh" class="${page.locale === "en" ? "" : "on"}">中文</button>
+              <button type="button" data-locale="en" class="${page.locale === "en" ? "on" : ""}">EN</button>
+            </div>
+          </div>
+          ${field("HTML 內容", "content_html", managed ? "" : (page.content_html || ""), "code")}
+        </section>
         <div class="editor-actions">
           ${creating ? "<span></span>" : `<button class="btn-danger" type="button" id="del">刪除此${isPost ? "文章" : "頁面"}</button>`}
           <button class="btn-primary" type="submit">儲存</button>
@@ -715,11 +906,56 @@
       };
       const titleEl = app.querySelector("#writer-title");
       const titleInput = form.querySelector("[name=title]");
-      if (titleEl && titleInput) {
+        if (titleEl && titleInput) {
         titleEl.textContent = titleInput.value || "";
         titleEl.oninput = () => { titleInput.value = titleEl.textContent; updateStats(); };
         titleInput.addEventListener("input", () => { if (document.activeElement !== titleEl) titleEl.textContent = titleInput.value; updateStats(); });
       }
+      const localeFields = ["title", "slug", "nav_label", "meta_title", "meta_description", "excerpt"];
+      const emptyDraft = () => ({ sections: [{ type: "text", text: "", size: "m", color: "" }], html: "", values: {} });
+      const drafts = { zh: emptyDraft(), en: emptyDraft() };
+      let editLocale = page.locale === "en" ? "en" : "zh";
+      const slugify = (value) => String(value || "").trim().toLowerCase().replace(/\.html$/, "").replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
+      const captureDraft = (locale) => {
+        syncFromDom();
+        const values = {};
+        localeFields.forEach((name) => {
+          const input = form.querySelector(`[name="${name}"]`);
+          if (input) values[name] = input.value;
+        });
+        drafts[locale] = { sections: JSON.parse(JSON.stringify(sections)), html: form.querySelector("[name=content_html]")?.value || "", values };
+      };
+      const applyDraft = (locale) => {
+        const draft = drafts[locale];
+        localeFields.forEach((name) => {
+          const input = form.querySelector(`[name="${name}"]`);
+          if (input) input.value = draft.values[name] || "";
+        });
+        const html = form.querySelector("[name=content_html]");
+        if (html) html.value = draft.html || "";
+        const localeInput = form.querySelector("[name=locale]");
+        if (localeInput) localeInput.value = locale;
+        sections = JSON.parse(JSON.stringify(draft.sections.length ? draft.sections : emptyDraft().sections));
+        active = 0;
+        if (titleEl) titleEl.textContent = form.querySelector("[name=title]")?.value || "";
+        paint(0, null, true);
+        updateStats();
+      };
+      const setLangButtons = (locale) => {
+        app.querySelectorAll("#edit-lang button, #html-lang button").forEach((item) => item.classList.toggle("on", item.dataset.locale === locale));
+      };
+      const switchLocale = (locale) => {
+        if (!creating) {
+          if (partner && locale !== editLocale) route("edit", partner.id);
+          return;
+        }
+        if (locale === editLocale) return;
+        captureDraft(editLocale);
+        editLocale = locale;
+        applyDraft(locale);
+        setLangButtons(locale);
+      };
+      app.querySelectorAll("#edit-lang button, #html-lang button").forEach((button) => button.onclick = () => switchLocale(button.dataset.locale));
       app.querySelectorAll("[data-cmd]").forEach((b) => {
         b.onmousedown = (e) => e.preventDefault();
         b.onclick = () => {
@@ -796,10 +1032,58 @@
         } else if (html) body.use_html = true;
         if (body.use_html) body.sections = [];
         else delete body.content_html;
+        const sectionFilled = (list) => (list || []).filter((s) => {
+          if (s.type === "text" || s.type === "heading" || s.type === "quote") return String(s.text || "").trim() && s.text !== "/";
+          if (s.type === "list") return (s.items || []).some((item) => String(item).trim());
+          if (s.type === "image" || s.type === "video") return !!s.url;
+          return s.type === "table" || s.type === "divider";
+        });
         try {
           if (creating) {
-            const created = await api("/api/admin/pages", { method: "POST", body: JSON.stringify(body) });
-            route("edit", created.id);
+            captureDraft(editLocale);
+            const ready = ["zh", "en"].filter((locale) => {
+              const draft = drafts[locale];
+              return String(draft.values.title || "").trim() || String(draft.html || "").trim() || sectionFilled(draft.sections).length;
+            });
+            if (ready.length === 2) {
+              let zhSlug = slugify(drafts.zh.values.slug || drafts.zh.values.title);
+              let enSlug = slugify(drafts.en.values.slug || "");
+              if (!zhSlug) { showErr("請先為中文頁填寫網址別名。"); return; }
+              if (!enSlug) enSlug = zhSlug + "-en";
+              const postDraft = async (locale, slug, pair) => {
+                const draft = drafts[locale];
+                const payload = Object.fromEntries(new FormData(form).entries());
+                localeFields.forEach((name) => { if (draft.values[name] != null) payload[name] = draft.values[name]; });
+                payload.locale = locale;
+                payload.slug = slug;
+                payload.pair_slug = pair;
+                payload.kind = page.kind;
+                payload.show_in_nav = payload.show_in_nav === "1";
+                const secs = sectionFilled(draft.sections);
+                const htmlText = String(draft.html || "").trim();
+                if (htmlText && !secs.length) { payload.use_html = true; payload.content_html = htmlText; payload.sections = []; }
+                else { payload.use_html = false; payload.sections = secs; delete payload.content_html; }
+                return api("/api/admin/pages", { method: "POST", body: JSON.stringify(payload) });
+              };
+              await postDraft("zh", zhSlug, enSlug);
+              await postDraft("en", enSlug, zhSlug);
+              route(isPost ? "posts" : "pages");
+              return;
+            }
+            if (ready.length === 1 && ready[0] !== editLocale) {
+              applyDraft(ready[0]);
+              editLocale = ready[0];
+              const draft = drafts[editLocale];
+              localeFields.forEach((name) => { if (draft.values[name] != null) body[name] = draft.values[name]; });
+              body.locale = editLocale;
+              body.sections = sectionFilled(draft.sections);
+              const htmlText = String(draft.html || "").trim();
+              body.use_html = !!htmlText && !body.sections.length;
+              if (body.use_html) body.content_html = htmlText;
+              else delete body.content_html;
+            }
+            await api("/api/admin/pages", { method: "POST", body: JSON.stringify(body) });
+            route(isPost ? "posts" : "pages");
           } else {
             await api("/api/admin/pages/" + page.id, { method: "PUT", body: JSON.stringify(body) });
             showErr("變更已儲存，前台已更新。", true);
