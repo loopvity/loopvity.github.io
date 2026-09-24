@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Vault：專為 AI 高頻使用者打造的 100% 離線提示詞收納庫 | Loopvity Blog</title>
+    <meta name="description" content="深度剖析 Prompt Vault 的設計初衷與架構。解決 AI 創作者指令散落痛點，提供動態變數合成、雙擊極速複製與本機離線安全儲存。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function(){try{if(localStorage.getItem('loopvity-theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}})();
+    </script>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { overflow-y: scroll; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; background-color: #f4f7fb; color: #111827; }
+        html.theme-dark body { background-color: #0b0f19; color: #f3f4f6; }
+        .gradient-brand { background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #9b51e0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-glass { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border: 1px solid rgba(15, 23, 42, 0.08); }
+        html.theme-dark .card-glass { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- 頂部懸浮導航列 -->
+    <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
+        <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="Loopvity" class="h-8 sm:h-9 w-auto">
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
+                <a href="index.html" class="hover:text-cyan-600 transition">首頁</a>
+                <a href="cases.html" class="hover:text-cyan-600 transition">產品</a>
+                <!-- Blog 高亮 -->
+                <a href="blog.html" class="text-cyan-600 transition">Blog</a>
+                <a href="contact.html" class="hover:text-cyan-600 transition">聯絡我們</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="article-prompt-vault-en.html" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">EN</a>
+                <button type="button" class="theme-toggle" data-theme-toggle aria-label="切換至深色模式">
+                    <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+                    <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                </button>
+                <a href="https://wa.me/85200000000" target="_blank" class="hidden sm:flex items-center gap-2 bg-[#25D366] text-white px-5 py-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">
+                    <span>WhatsApp 查詢</span>
+                </a>
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-900 p-2 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <!-- 手機版下拉選單 -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-5 flex-col gap-4 text-sm font-bold text-gray-900 lg:hidden">
+                <a href="index.html" class="hover:text-cyan-600 transition px-2 py-1 block">首頁</a>
+                <a href="cases.html" class="hover:text-cyan-600 transition px-2 py-1 block">產品</a>
+                <a href="blog.html" class="text-cyan-600 transition px-2 py-1 block">Blog</a>
+                <a href="contact.html" class="hover:text-cyan-600 transition px-2 py-1 block">聯絡我們</a>
+                <a href="article-prompt-vault-en.html" class="text-gray-500 hover:text-cyan-600 transition px-2 py-1 block font-bold">English (EN)</a>
+                <a href="https://wa.me/85200000000" target="_blank" class="sm:hidden flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 mt-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">WhatsApp 查詢</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto px-6 pt-24 md:pt-32 pb-20 w-full">
+        <!-- 返回連結 -->
+        <div class="mb-8">
+            <a href="blog.html" class="text-xs font-bold text-cyan-400 hover:underline inline-flex items-center gap-1.5">
+                <span>←</span> 返回 Blog 文章列表
+            </a>
+        </div>
+
+        <!-- 文章內容容器 -->
+        <article class="card-glass rounded-3xl p-8 md:p-14 border border-zinc-800 shadow-2xl">
+            <!-- 文章 Meta -->
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full uppercase tracking-wider">產品專文</span>
+                <span class="text-xs text-gray-500 font-mono">2026-09-23</span>
+                <span class="text-xs text-gray-500">· 5 分鐘閱讀</span>
+            </div>
+
+            <!-- 主標題 -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-8">
+                Prompt Vault：專為 AI 高頻使用者打造的 100% 離線提示詞收納庫
+            </h1>
+
+            <!-- 橫幅裝飾圖示 -->
+            <div class="w-full h-48 sm:h-64 bg-gradient-to-br from-cyan-950/60 via-zinc-900 to-zinc-950 rounded-2xl flex flex-col items-center justify-center border border-zinc-800 mb-10 text-6xl shadow-inner">
+                <span>⚡️</span>
+                <span class="text-xs font-mono font-bold text-cyan-400 mt-3 tracking-widest uppercase">Prompt Vault Release Note</span>
+            </div>
+
+            <!-- 正文內容 -->
+            <div class="space-y-8 text-gray-300 text-sm sm:text-base leading-relaxed">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">起源：當生成式 AI 成為日常工作流</h2>
+                    <p class="text-gray-400 leading-relaxed">
+                        隨著 ChatGPT、Claude、Midjourney 等生成式 AI 工具深入日常工作，我們發現提示詞（Prompts）已經演變為創作者與工程師的核心生產力資產。然而，多數人管理提示詞的現狀卻充滿摩擦：
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2 mt-3">
+                        <li>模板散落在不同通訊軟體、純文字記事簿或雲端筆記中，查找極為耗時。</li>
+                        <li>每次複製模板後，必須手動在對話框內尋找佔位符逐一替換變數，容易漏改或出錯。</li>
+                        <li>雲端筆記軟體存在連線延遲，且讓敏感的商業提示詞承擔外部數據洩漏的風險。</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-zinc-800/80 pt-8">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">核心解法：三大高效率交互設計</h2>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        Prompt Vault 的設計哲學非常明確：<strong>拋棄繁雜的背景冗餘，將「調用速度」與「隱私安全」做到極致</strong>。
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800">
+                            <h3 class="font-bold text-white text-base mb-1">1. 雙擊極速複製手勢 (Double-Tap to Copy)</h3>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                在清單中單擊卡片可展開完整預覽；雙擊卡片則直接將完整語句複製至剪貼簿，並伴隨輕微震動反饋，隨即能無縫切換到 AI 工具貼上。
+                            </p>
+                        </div>
+                        <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800">
+                            <h3 class="font-bold text-white text-base mb-1">2. 變數動態即時合成 (Dynamic Placeholders)</h3>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                支援以大括號標註動態欄位（例如：<code class="text-cyan-400 bg-zinc-800 px-1 py-0.5 rounded font-mono text-xs">{語言}</code>）。開啟預覽時系統自動生成獨立輸入欄，填寫內容後即時合成最終指令，無需手動尋找文字替換。
+                            </p>
+                        </div>
+                        <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800">
+                            <h3 class="font-bold text-white text-base mb-1">3. 本機 15 次修改版本歷程 (Revision History)</h3>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                針對多次微調迭代的專業提示詞，App 於本地自動保存最近 15 次歷史修改版本，方便對照效果差異或一鍵還原至先前的成功狀態。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-zinc-800/80 pt-8">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">架構承諾：100% 離線與資料自主</h2>
+                    <p class="text-gray-400 leading-relaxed mb-3">
+                        Prompt Vault 採用嚴格的 <strong>Local-first（離線優先）</strong> 架構：
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                        <li><strong>零帳號體系：</strong> 安裝開啟即用，無需註冊或登入任何帳戶。</li>
+                        <li><strong>零網路權限：</strong> 應用程式不包含任何遠端資料庫連線、分析追蹤 SDK 或遙測代碼。</li>
+                        <li><strong>自主備份：</strong> 隨時可將全部提示詞打包匯出為純 JSON 檔案，完全由使用者自主備份至個人硬碟或換機移轉。</li>
+                    </ul>
+                </div>
+
+                <!-- 產品通道引導 -->
+                <div class="bg-gradient-to-r from-cyan-950/40 to-blue-950/40 p-6 sm:p-8 rounded-2xl border border-cyan-500/20 flex flex-col sm:flex-row items-center justify-between gap-6 mt-10">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-1">探索 Prompt Vault 產品詳情</h3>
+                        <p class="text-xs text-gray-400">目前雙平台商店發布流程就緒中，歡迎查看完整功能與規格。</p>
+                    </div>
+                    <a href="cases.html" class="shrink-0 bg-white text-gray-950 px-6 py-2.5 rounded-full font-bold text-xs hover:bg-gray-200 transition shadow-lg">
+                        前往產品頁面
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-auto">
+        <div>&copy; 2026 Loopvity Studio. All rights reserved.</div>
+        <div class="flex gap-4 sm:gap-6 flex-wrap justify-center">
+            <a href="mailto:loopvity@gmail.com" class="hover:text-gray-300 transition">loopvity@gmail.com</a>
+            <a href="terms.html" class="hover:text-gray-300 transition">條款及細則</a>
+            <a href="privacy.html" class="hover:text-gray-300 transition">私隱政策</a>
+            <a href="cookie.html" class="hover:text-gray-300 transition">Cookie 政策</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
+            document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.add('hidden'); menu.classList.remove('flex'); } });
+        });
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>

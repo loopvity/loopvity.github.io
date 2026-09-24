@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Vault: The 100% Offline Prompt Repository for AI Power Users | Loopvity Blog</title>
+    <meta name="description" content="A deep dive into why Prompt Vault was engineered: solving scattered note templates with dynamic variable synthesis, double-tap copying, and local storage privacy.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function(){try{if(localStorage.getItem('loopvity-theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}})();
+    </script>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { overflow-y: scroll; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; background-color: #f4f7fb; color: #111827; }
+        html.theme-dark body { background-color: #0b0f19; color: #f3f4f6; }
+        .gradient-brand { background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #9b51e0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-glass { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border: 1px solid rgba(15, 23, 42, 0.08); }
+        html.theme-dark .card-glass { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
+        <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+            <a href="index-en.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="Loopvity" class="h-8 sm:h-9 w-auto">
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
+                <a href="index-en.html" class="hover:text-cyan-600 transition">Home</a>
+                <a href="cases-en.html" class="hover:text-cyan-600 transition">Products</a>
+                <!-- Blog Highlight -->
+                <a href="blog-en.html" class="text-cyan-600 transition">Blog</a>
+                <a href="contact-en.html" class="hover:text-cyan-600 transition">Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="article-prompt-vault.html" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">繁中</a>
+                <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+                    <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+                    <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                </button>
+                <a href="https://wa.me/85200000000" target="_blank" class="hidden sm:flex items-center gap-2 bg-[#25D366] text-white px-5 py-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">
+                    <span>WhatsApp Us</span>
+                </a>
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-900 p-2 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-5 flex-col gap-4 text-sm font-bold text-gray-900 lg:hidden">
+                <a href="index-en.html" class="hover:text-cyan-600 transition px-2 py-1 block">Home</a>
+                <a href="cases-en.html" class="hover:text-cyan-600 transition px-2 py-1 block">Products</a>
+                <a href="blog-en.html" class="text-cyan-600 transition px-2 py-1 block">Blog</a>
+                <a href="contact-en.html" class="hover:text-cyan-600 transition px-2 py-1 block">Contact</a>
+                <a href="article-prompt-vault.html" class="text-gray-500 hover:text-cyan-600 transition px-2 py-1 block font-bold">繁體中文</a>
+                <a href="https://wa.me/85200000000" target="_blank" class="sm:hidden flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 mt-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">WhatsApp Us</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto px-6 pt-24 md:pt-32 pb-20 w-full">
+        <!-- Back Link -->
+        <div class="mb-8">
+            <a href="blog-en.html" class="text-xs font-bold text-cyan-400 hover:underline inline-flex items-center gap-1.5">
+                <span>←</span> Back to Blog Posts
+            </a>
+        </div>
+
+        <!-- Article Container -->
+        <article class="card-glass rounded-3xl p-8 md:p-14 border border-zinc-800 shadow-2xl">
+            <!-- Meta -->
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full uppercase tracking-wider">Product Article</span>
+                <span class="text-xs text-gray-500 font-mono">2026-09-23</span>
+                <span class="text-xs text-gray-500">· 5 min read</span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-8">
+                Prompt Vault: The 100% Offline Prompt Repository for AI Power Users
+            </h1>
+
+            <!-- Banner Graphic -->
+            <div class="w-full h-48 sm:h-64 bg-gradient-to-br from-cyan-950/60 via-zinc-900 to-zinc-950 rounded-2xl flex flex-col items-center justify-center border border-zinc-800 mb-10 text-6xl shadow-inner">
+                <span>⚡️</span>
+                <span class="text-xs font-mono font-bold text-cyan-400 mt-3 tracking-widest uppercase">Prompt Vault Architecture Note</span>
+            </div>
+
+            <!-- Article Body -->
+            <div class="space-y-8 text-gray-300 text-sm sm:text-base leading-relaxed">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">Origin: When Generative AI Becomes Daily Work</h2>
+                    <p class="text-gray-400 leading-relaxed">
+                        As LLM tools like ChatGPT, Claude, and Midjourney have become fundamental drivers of knowledge workflows, prompt engineering has evolved into intellectual capital. Yet managing prompt templates remains full of friction:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2 mt-3">
+                        <li>Templates are fragmented across chat apps, text editors, or note platforms, demanding constant hunting.</li>
+                        <li>Filling out dynamic variables inside messy dialog inputs frequently causes typos or missed tags.</li>
+                        <li>Cloud note syncing exposes sensitive proprietary prompts to remote third-party servers.</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-zinc-800/80 pt-8">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">Core Solutions: Three High-Efficiency Workflows</h2>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        Prompt Vault was engineered with a clear principle: <strong>eliminate background overhead to maximize access speed and absolute privacy</strong>.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800">
+                            <h3 class="font-bold text-white text-base mb-1">1. Double-Tap Fast Gesture Copying</h3>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                Single tap expands cards for preview; double tap immediately copies full statements to your clipboard with subtle haptic feedback, ready to paste into any model.
+                            </p>
+                        </div>
+                        <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800">
+                            <h3 class="font-bold text-white text-base mb-1">2. Live Dynamic Variable Synthesis</h3>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                Insert curly brackets (e.g., <code class="text-cyan-400 bg-zinc-800 px-1 py-0.5 rounded font-mono text-xs">{language}</code>) inside your templates. When opening preview, the app dynamically extracts input fields and synthesizes the finalized statement on the fly.
+                            </p>
+                        </div>
+                        <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800">
+                            <h3 class="font-bold text-white text-base mb-1">3. Local 15-Revision History Logs</h3>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                For iterative refinement, the app automatically logs 15 recent edits locally on your device, making it effortless to compare phrasing iterations or revert with a single tap.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-zinc-800/80 pt-8">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">Architecture: 100% Offline-First Autonomy</h2>
+                    <p class="text-gray-400 leading-relaxed mb-3">
+                        Prompt Vault is constructed under a strict <strong>Local-first</strong> philosophy:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                        <li><strong>Zero Account Barrier:</strong> Operates immediately upon installation without registration or login.</li>
+                        <li><strong>Zero Telemetry:</strong> No remote databases, analytics SDKs, or background pings.</li>
+                        <li><strong>Autonomous Export:</strong> Users can package all content into a standard JSON file at any time for manual backups or device migration.</li>
+                    </ul>
+                </div>
+
+                <!-- Product CTA Box -->
+                <div class="bg-gradient-to-r from-cyan-950/40 to-blue-950/40 p-6 sm:p-8 rounded-2xl border border-cyan-500/20 flex flex-col sm:flex-row items-center justify-between gap-6 mt-10">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-1">Explore Prompt Vault</h3>
+                        <p class="text-xs text-gray-400">Releasing soon on iOS and Android app stores. View full specs and FAQ.</p>
+                    </div>
+                    <a href="cases-en.html" class="shrink-0 bg-white text-gray-950 px-6 py-2.5 rounded-full font-bold text-xs hover:bg-gray-200 transition shadow-lg">
+                        Go to Products Page
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-auto">
+        <div>&copy; 2026 Loopvity Studio. All rights reserved.</div>
+        <div class="flex gap-4 sm:gap-6 flex-wrap justify-center">
+            <a href="mailto:loopvity@gmail.com" class="hover:text-gray-300 transition">loopvity@gmail.com</a>
+            <a href="terms-en.html" class="hover:text-gray-300 transition">Terms &amp; Conditions</a>
+            <a href="privacy-en.html" class="hover:text-gray-300 transition">Privacy Policy</a>
+            <a href="cookie-en.html" class="hover:text-gray-300 transition">Cookie Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
+            document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.add('hidden'); menu.classList.remove('flex'); } });
+        });
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>

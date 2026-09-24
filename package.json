@@ -1,0 +1,12 @@
+{
+  "name": "loopvity-site",
+  "private": true,
+  "scripts": {
+    "seed": "node scripts/build-seed.mjs",
+    "dev": "wrangler pages dev public --port 8788",
+    "deploy": "wrangler pages deploy public"
+  },
+  "devDependencies": {
+    "wrangler": "^4.24.0"
+  }
+}

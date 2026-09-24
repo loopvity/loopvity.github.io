@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loopvity - Independent App Studio | Pragmatic Utility Tools</title>
+    <meta name="description" content="Loopvity is an independent software studio building practical mobile apps for iOS and Android, dedicated to offline-first architectures and privacy.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function(){try{if(localStorage.getItem('loopvity-theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}})();
+    </script>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { overflow-y: scroll; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; background-color: #f4f7fb; color: #111827; }
+        html.theme-dark body { background-color: #0b0f19; color: #f3f4f6; }
+        .gradient-brand { background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #9b51e0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-glass { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border: 1px solid rgba(15, 23, 42, 0.08); }
+        html.theme-dark .card-glass { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
+        <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+            <a href="index-en.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="Loopvity" class="h-8 sm:h-9 w-auto">
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
+                <a href="index-en.html" class="text-cyan-600 transition">Home</a>
+                <a href="cases-en.html" class="hover:text-cyan-600 transition">Products</a>
+                <a href="blog-en.html" class="hover:text-cyan-600 transition">Blog</a>
+                <a href="contact-en.html" class="hover:text-cyan-600 transition">Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">繁中</a>
+                <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+                    <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+                    <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                </button>
+                <a href="https://wa.me/85200000000" target="_blank" class="hidden sm:flex items-center gap-2 bg-[#25D366] text-white px-5 py-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">
+                    <span>WhatsApp Us</span>
+                </a>
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-900 p-2 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-5 flex-col gap-4 text-sm font-bold text-gray-900 lg:hidden">
+                <a href="index-en.html" class="text-cyan-600 transition px-2 py-1 block">Home</a>
+                <a href="cases-en.html" class="hover:text-cyan-600 transition px-2 py-1 block">Products</a>
+                <a href="blog-en.html" class="hover:text-cyan-600 transition px-2 py-1 block">Blog</a>
+                <a href="contact-en.html" class="hover:text-cyan-600 transition px-2 py-1 block">Contact</a>
+                <a href="index.html" class="text-gray-500 hover:text-cyan-600 transition px-2 py-1 block font-bold">繁體中文</a>
+                <a href="https://wa.me/85200000000" target="_blank" class="sm:hidden flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 mt-2 rounded-full font-bold text-sm hover:brightness-105 transition shadow-sm">WhatsApp Us</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <!-- Hero Section -->
+        <section class="max-w-5xl mx-auto px-6 pt-14 md:pt-12 pb-16 text-center flex flex-col items-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold text-cyan-400 bg-cyan-500/10 rounded-full border border-cyan-500/20">
+                Independent App Studio · iOS &amp; Android
+            </div>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-8 leading-tight sm:leading-snug">
+                Crafting Practical Utilities <br class="hidden sm:block">
+                <span class="gradient-brand mt-2 inline-block">Privacy-First Independent Apps</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-normal">
+                Loopvity is an independent software studio focused on ergonomic mobile utilities. We design with simplicity, minimal overhead, and strict 100% offline data integrity.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md">
+                <a href="cases-en.html" class="w-full sm:w-auto flex-1 bg-white text-gray-950 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition text-center shadow-lg">Explore Products</a>
+                <a href="contact-en.html" class="w-full sm:w-auto flex-1 bg-zinc-900 border border-zinc-700 text-white px-8 py-3.5 rounded-full font-bold hover:bg-zinc-800 transition text-center">Contact Us</a>
+            </div>
+        </section>
+
+        <!-- Real Core Metrics -->
+        <section class="max-w-6xl mx-auto px-6 py-10 border-y border-zinc-800/50 my-6 bg-gradient-to-r from-transparent via-zinc-900/30 to-transparent">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">100%</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Offline Architecture</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">0%</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Telemetry &amp; Tracking</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">Dual</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">iOS &amp; Android</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-cyan-400 mb-1">Local</div>
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Autonomous Storage</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flagship Product: Prompt Vault -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Our Product</h2>
+                <h3 class="text-3xl sm:text-4xl font-black">Flagship Application</h3>
+            </div>
+
+            <div class="card-glass rounded-3xl border border-zinc-800 p-8 md:p-12 overflow-hidden relative">
+                <div class="flex flex-col lg:flex-row gap-10 items-center justify-between">
+                    <div class="w-full lg:w-3/5">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full uppercase tracking-wider">iOS &amp; Android</span>
+                            <span class="text-xs text-yellow-400 font-bold bg-yellow-400/10 px-3 py-1 rounded-full animate-pulse">Coming Soon</span>
+                        </div>
+                        <h4 class="text-3xl sm:text-4xl font-black text-white mb-4 flex items-center gap-3">
+                            <span class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-2xl shadow-lg">⚡️</span>
+                            Prompt Vault
+                        </h4>
+                        <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
+                            A dedicated offline prompt repository designed for heavy generative AI users (ChatGPT, Claude, Midjourney). Solves scattered note templates and tedious variable tweaks. Features fast gesture copying, live variable synthesis, and 15 revision logs.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-xs text-gray-300 mb-8">
+                            <div class="bg-zinc-900/80 px-3 py-2.5 rounded-xl border border-zinc-800 text-center font-semibold whitespace-nowrap">Double-Tap Copy</div>
+                            <div class="bg-zinc-900/80 px-3 py-2.5 rounded-xl border border-zinc-800 text-center font-semibold whitespace-nowrap">Dynamic Variables</div>
+                            <div class="bg-zinc-900/80 px-3 py-2.5 rounded-xl border border-zinc-800 text-center font-semibold whitespace-nowrap">One-Click JSON Export</div>
+                        </div>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <a href="cases-en.html" class="bg-white text-gray-950 px-8 py-3 rounded-full font-bold text-sm hover:bg-gray-200 transition shadow-lg">Explore Features</a>
+                            <span class="text-xs text-gray-500 font-mono">Releasing soon on App Store &amp; Google Play</span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-2/5 flex flex-col items-center justify-center bg-zinc-900/40 p-8 rounded-2xl border border-zinc-800/80 text-center">
+                        <div class="text-6xl mb-4">📱</div>
+                        <div class="text-lg font-black text-white mb-2">Development Complete</div>
+                        <p class="text-xs text-gray-400 mb-6 leading-relaxed">Undergoing final store validation on Apple App Store &amp; Google Play. More standalone tools are currently being drafted.</p>
+                        <div class="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 bg-cyan-500/10 px-4 py-2 rounded-full border border-cyan-500/20">
+                            <span>🚀 More Tools In Progress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Studio Principles -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-8 md:p-12">
+                <div class="text-center mb-10">
+                    <h3 class="text-2xl sm:text-3xl font-black text-white">Our Product Principles</h3>
+                    <p class="text-gray-400 text-sm mt-3">Dedicated to shipping tools worthy of long-term user trust.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-inner">🔒</div>
+                        <h4 class="font-bold text-white mb-2">Offline-First &amp; Privacy</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">No data transmission. All content remains strictly inside your device sandbox, guaranteeing complete autonomy.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-inner">⚡️</div>
+                        <h4 class="font-bold text-white mb-2">Ergonomic Workflow</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Eliminating bloat to focus on high-efficiency micro-interactions that accelerate your daily routines.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-zinc-800 rounded-full flex items-center justify-center text-2xl mb-4 shadow-inner">💎</div>
+                        <h4 class="font-bold text-white mb-2">Transparent Pricing</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Future paid software or premium tiers will maintain crystal clear pricing, free from hidden telemetry.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Posts Preview -->
+        <section class="max-w-6xl mx-auto px-6 py-16">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Blog Posts</h2>
+                    <h3 class="text-3xl font-black">Latest Insights &amp; Logs</h3>
+                </div>
+                <a href="blog-en.html" class="hidden sm:inline-block text-sm font-bold text-gray-400 hover:text-white transition">View All Notes →</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Blog 1: Prompt Vault -->
+                <a href="article-prompt-vault-en.html" class="card-glass p-7 rounded-2xl border border-zinc-800 hover:border-cyan-400 transition-all duration-300 group block">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">Product Article</span>
+                        <span class="text-xs text-gray-500 font-mono">2026-09-23</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3 leading-snug group-hover:text-cyan-400 transition">
+                        ⚡️ Prompt Vault: The 100% Offline Prompt Storage for AI Power Users
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        A deep dive into why Prompt Vault was engineered: eliminating scattered note files with dynamic variable synthesis and local version logs.
+                    </p>
+                    <span class="text-xs text-cyan-400 font-bold group-hover:underline">Read Full Article →</span>
+                </a>
+
+                <!-- Blog 2: App Architecture Selection -->
+                <a href="article-app-native-vs-cross-en.html" class="card-glass p-7 rounded-2xl border border-zinc-800 hover:border-cyan-400 transition-all duration-300 group block">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold text-blue-400 bg-blue-400/10 px-3 py-1 rounded-full">App Dev</span>
+                        <span class="text-xs text-gray-500 font-mono">2026-09-20</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3 leading-snug group-hover:text-cyan-400 transition">
+                        App Architecture Selection: Native vs Cross-Platform
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Examining trade-offs in development cycles, hardware access, and long-term maintenance costs for solo software engineers.
+                    </p>
+                    <span class="text-xs text-cyan-400 font-bold group-hover:underline">Read Full Article →</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-12">
+        <div>&copy; 2026 Loopvity Studio. All rights reserved.</div>
+        <div class="flex gap-4 sm:gap-6 flex-wrap justify-center">
+            <a href="mailto:loopvity@gmail.com" class="hover:text-gray-300 transition">loopvity@gmail.com</a>
+            <a href="terms-en.html" class="hover:text-gray-300 transition">Terms &amp; Conditions</a>
+            <a href="privacy-en.html" class="hover:text-gray-300 transition">Privacy Policy</a>
+            <a href="cookie-en.html" class="hover:text-gray-300 transition">Cookie Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
+            document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.add('hidden'); menu.classList.remove('flex'); } });
+        });
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>
