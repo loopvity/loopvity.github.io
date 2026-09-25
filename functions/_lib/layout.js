@@ -121,7 +121,7 @@ export function renderDocument({ page, settings, nav, posts, origin }) {
   <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
     <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
       <a href="${locale === "en" ? "/index-en.html" : "/index.html"}" class="flex items-center shrink-0">
-        <img src="${esc(settings.logo_url || "/logo.png")}" alt="${esc(settings.site_name)}" class="h-8 sm:h-9 w-auto">
+        <img src="${esc(settings.logo_url || "/logo.png")}" alt="${esc(settings.site_name)}" class="h-6 sm:h-9 w-auto">
       </a>
       <div class="hidden lg:flex items-center gap-8 text-sm font-bold">${desktopNav}</div>
       <div class="flex items-center gap-4">
