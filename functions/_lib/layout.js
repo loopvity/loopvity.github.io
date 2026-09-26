@@ -119,13 +119,13 @@ export function renderDocument({ page, settings, nav, posts, origin }) {
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
   <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
-    <nav class="relative bg-white/95 backdrop-blur-md px-4 sm:px-6 py-3 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+    <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
       <a href="${locale === "en" ? "/index-en.html" : "/index.html"}" class="flex items-center shrink-0">
-        <img src="${esc(settings.logo_url || "/logo.png")}" alt="${esc(settings.site_name)}" class="site-logo">
+        <img src="${esc(settings.logo_url || "/logo.png")}" alt="${esc(settings.site_name)}" class="h-[23px] sm:h-[35px] w-auto">
       </a>
       <div class="hidden lg:flex items-center gap-8 text-sm font-bold">${desktopNav}</div>
-      <div class="flex items-center gap-2.5 sm:gap-4">
-        <a href="${esc(langSwitch)}" class="lang-switch text-sm font-bold text-gray-500 hover:text-cyan-600 transition">${langLabel}</a>
+      <div class="flex items-center gap-4">
+        <a href="${esc(langSwitch)}" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">${langLabel}</a>
         <button type="button" class="theme-toggle" data-theme-toggle aria-label="theme">
           <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
           <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
@@ -145,11 +145,11 @@ export function renderDocument({ page, settings, nav, posts, origin }) {
   <main class="${esc(page.main_class || "flex-1 w-full")}">${content}</main>
   <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-12">
     <div>${esc(settings.footer_text)}</div>
-    <div class="site-footer-links">
+    <div class="footer-links flex gap-4 sm:gap-6 flex-wrap justify-center">
       <a href="mailto:${esc(settings.email)}" class="hover:text-gray-300 transition">${esc(settings.email)}</a>
-      <a href="${locale === "en" ? "/terms-en.html" : "/terms.html"}" class="hover:text-gray-300 transition">${locale === "en" ? "Terms & Conditions" : "條款及細則"}</a>
-      <a href="${locale === "en" ? "/privacy-en.html" : "/privacy.html"}" class="hover:text-gray-300 transition">${locale === "en" ? "Privacy Policy" : "私隱政策"}</a>
-      <a href="${locale === "en" ? "/cookie-en.html" : "/cookie.html"}" class="hover:text-gray-300 transition">${locale === "en" ? "Cookie Policy" : "Cookie 政策"}</a>
+      <a href="${locale === "en" ? "/terms-en.html" : "/terms.html"}" class="hover:text-gray-300 transition">${locale === "en" ? "Terms" : "條款及細則"}</a>
+      <a href="${locale === "en" ? "/privacy-en.html" : "/privacy.html"}" class="hover:text-gray-300 transition">${locale === "en" ? "Privacy" : "私隱政策"}</a>
+      <a href="${locale === "en" ? "/cookie-en.html" : "/cookie.html"}" class="hover:text-gray-300 transition">${locale === "en" ? "Cookies" : "Cookie 政策"}</a>
     </div>
   </footer>
   <script>

@@ -26,9 +26,9 @@
 
     <!-- 頂部懸浮導航列 -->
     <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
-        <nav class="relative bg-white/95 backdrop-blur-md px-4 sm:px-6 py-3 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
-            <a href="index.html" class="flex items-center shrink-0">
-                <img src="logo.png" alt="Loopvity" class="site-logo">
+        <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="Loopvity" class="h-[23px] sm:h-[35px] w-auto">
             </a>
             <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
                 <a href="index.html" class="hover:text-cyan-600 transition">首頁</a>
@@ -37,8 +37,8 @@
                 <!-- 聯絡我們 高亮 -->
                 <a href="contact.html" class="text-cyan-600 transition">聯絡我們</a>
             </div>
-            <div class="flex items-center gap-2.5 sm:gap-4">
-                <a href="contact-en.html" class="lang-switch text-sm font-bold text-gray-500 hover:text-cyan-600 transition">EN</a>
+            <div class="flex items-center gap-4">
+                <a href="contact-en.html" class="text-sm font-bold text-gray-500 hover:text-cyan-600 transition">EN</a>
                 <button type="button" class="theme-toggle" data-theme-toggle aria-label="切換至深色模式">
                     <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
                     <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0L17.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
@@ -153,43 +153,42 @@
         </section>
 
         <!-- 常見問題解答 (FAQ) -->
-        <section class="max-w-5xl mx-auto px-6 pb-16">
-            <div class="border-t border-zinc-800/80 pt-8">
-                <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
-                    <span>❓</span> 常見問題解答 (FAQ)
-                </h3>
-                <p class="text-gray-400 text-sm mb-4">快速解決您在技術支援與購買時的常見疑惑。</p>
-                <div class="space-y-3">
-                    <details class="group bg-zinc-900/60 border border-zinc-800 rounded-xl">
-                        <summary class="flex items-start justify-between gap-3 font-bold text-sm text-gray-200 p-4 cursor-pointer outline-none">
-                            <span class="min-w-0 flex-1 leading-relaxed">1. 遇到 App 異常閃退或手勢失效時該如何快速排查？</span>
-                            <span class="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center text-cyan-400 text-xs leading-none transition group-open:rotate-180">▼</span>
-                        </summary>
-                        <div class="text-gray-400 text-xs px-4 pb-4 leading-relaxed border-t border-zinc-800/40 pt-3">
-                            建議先檢查 Apple App Store 或 Google Play 是否有最新版本可供更新。若問題依然存在，請透過上方表單提交「Bug 錯誤回報」，附上您的手機型號與系統版本，這將有助於開發團隊迅速定位並在下一個修正版本中推送更新。
-                        </div>
-                    </details>
+        <section class="max-w-3xl mx-auto px-6 py-16">
+            <div class="text-center mb-10">
+                <h3 class="text-2xl sm:text-3xl font-black text-white">常見問題解答 (FAQ)</h3>
+                <p class="text-gray-400 text-sm mt-3">快速解決您在技術支援與購買時的常見疑惑。</p>
+            </div>
 
-                    <details class="group bg-zinc-900/60 border border-zinc-800 rounded-xl">
-                        <summary class="flex items-start justify-between gap-3 font-bold text-sm text-gray-200 p-4 cursor-pointer outline-none">
-                            <span class="min-w-0 flex-1 leading-relaxed">2. 關於付費下載與應用內購 (IAP) 的退款處理機制？</span>
-                            <span class="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center text-cyan-400 text-xs leading-none transition group-open:rotate-180">▼</span>
-                        </summary>
-                        <div class="text-gray-400 text-xs px-4 pb-4 leading-relaxed border-t border-zinc-800/40 pt-3">
-                            所有付費下載與應用內購帳務均由 Apple 或 Google 官方金流系統直接處理。若需申請退款，可直接前往 Apple 官方的 reportaproblem.apple.com 或 Google Play 的帳戶訂單記錄頁面提出申請。如需核對購買證明亦可隨時聯絡我們協助。
-                        </div>
-                    </details>
+            <div class="space-y-4">
+                <details class="group card-glass rounded-2xl cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
+                        <span>1. 遇到 App 異常閃退或手勢失效時該如何快速排查？</span>
+                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
+                    </summary>
+                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
+                        建議先檢查 Apple App Store 或 Google Play 是否有最新版本可供更新。若問題依然存在，請透過上方表單提交「Bug 錯誤回報」，附上您的手機型號與系統版本，這將有助於開發團隊迅速定位並在下一個修正版本中推送更新。
+                    </div>
+                </details>
 
-                    <details class="group bg-zinc-900/60 border border-zinc-800 rounded-xl">
-                        <summary class="flex items-start justify-between gap-3 font-bold text-sm text-gray-200 p-4 cursor-pointer outline-none">
-                            <span class="min-w-0 flex-1 leading-relaxed">3. 如果我在使用或購買過程中遇到問題，通常多久能獲得回覆？</span>
-                            <span class="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center text-cyan-400 text-xs leading-none transition group-open:rotate-180">▼</span>
-                        </summary>
-                        <div class="text-gray-400 text-xs px-4 pb-4 leading-relaxed border-t border-zinc-800/40 pt-3">
-                            透過 WhatsApp 傳送之查詢，在工作時間內通常可在數小時內獲得即時對話；透過表單或電子郵件提交之問題工單，開發團隊會在 12 至 24 小時內仔細審閱並給予具體回覆。
-                        </div>
-                    </details>
-                </div>
+                <details class="group card-glass rounded-2xl cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
+                        <span>2. 關於付費下載與應用內購 (IAP) 的退款處理機制？</span>
+                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
+                    </summary>
+                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
+                        所有付費下載與應用內購帳務均由 Apple 或 Google 官方金流系統直接處理。若需申請退款，可直接前往 Apple 官方的 reportaproblem.apple.com 或 Google Play 的帳戶訂單記錄頁面提出申請。如需核對購買證明亦可隨時聯絡我們協助。
+                    </div>
+                </details>
+
+                <details class="group card-glass rounded-2xl cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
+                        <span>3. 如果我在使用或購買過程中遇到問題，通常多久能獲得回覆？</span>
+                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
+                    </summary>
+                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
+                        透過 WhatsApp 傳送之查詢，在工作時間內通常可在數小時內獲得即時對話；透過表單或電子郵件提交之問題工單，開發團隊會在 12 至 24 小時內仔細審閱並給予具體回覆。
+                    </div>
+                </details>
             </div>
         </section>
     </main>
@@ -197,7 +196,7 @@
     <!-- 頁尾 -->
     <footer class="max-w-6xl mx-auto w-full px-6 py-12 border-t border-zinc-900 text-gray-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-6 mt-12">
         <div>&copy; 2026 Loopvity Studio. All rights reserved.</div>
-        <div class="site-footer-links">
+        <div class="footer-links flex gap-4 sm:gap-6 flex-wrap justify-center">
             <a href="mailto:loopvity@gmail.com" class="hover:text-gray-300 transition">loopvity@gmail.com</a>
             <a href="terms.html" class="hover:text-gray-300 transition">條款及細則</a>
             <a href="privacy.html" class="hover:text-gray-300 transition">私隱政策</a>
