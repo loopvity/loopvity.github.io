@@ -155,6 +155,17 @@ html:not(.theme-dark) .category-pill.active {
     border-color: #06b6d4;
 }
 
+/* Balance heading lines. Gradient subtitles stay normal wrap so they don't collapse into a narrow column. */
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+}
+.gradient-brand {
+    text-wrap: wrap;
+}
+p, li, summary, blockquote, figcaption, td, th, label {
+    text-wrap: pretty;
+}
+
 /* Phone: English footer labels are longer than Chinese, so keep them in two even columns */
 @media (max-width: 639px) {
     html[lang^="en"] footer .footer-links {
