@@ -28,7 +28,7 @@
     <header class="sticky top-4 z-50 max-w-6xl mx-auto w-full px-4">
         <nav class="relative bg-white/95 backdrop-blur-md px-6 py-3.5 rounded-full flex items-center justify-between shadow-xl shadow-black/20 border border-gray-100 text-gray-900">
             <a href="index-en.html" class="flex items-center gap-2">
-                <img src="logo.png" alt="Loopvity" class="h-[18px] sm:h-7 w-auto">
+                <img src="logo.png" alt="Loopvity" class="h-4 sm:h-6 w-auto">
             </a>
             <div class="hidden lg:flex items-center gap-8 text-sm font-bold">
                 <a href="index-en.html" class="hover:text-cyan-600 transition">Home</a>
@@ -153,42 +153,43 @@
         </section>
 
         <!-- FAQ -->
-        <section class="max-w-3xl mx-auto px-6 py-16">
-            <div class="text-center mb-10">
-                <h3 class="text-2xl sm:text-3xl font-black text-white">Frequently Asked Questions</h3>
-                <p class="text-gray-400 text-sm mt-3">Quick solutions to common operational and account inquiries.</p>
-            </div>
+        <section class="max-w-5xl mx-auto px-6 pb-16">
+            <div class="border-t border-zinc-800/80 pt-8">
+                <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                    <span>❓</span> Frequently Asked Questions (FAQ)
+                </h3>
+                <p class="text-gray-400 text-sm mb-4">Quick solutions to common operational and account inquiries.</p>
+                <div class="space-y-3">
+                    <details class="group bg-zinc-900/60 border border-zinc-800 rounded-xl">
+                        <summary class="flex items-start justify-between gap-3 font-bold text-sm text-gray-200 p-4 cursor-pointer outline-none">
+                            <span class="min-w-0 flex-1 leading-relaxed">1. What should I do if an App crashes or gestures fail to respond?</span>
+                            <span class="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center text-cyan-400 text-xs leading-none transition group-open:rotate-180">▼</span>
+                        </summary>
+                        <div class="text-gray-400 text-xs px-4 pb-4 leading-relaxed border-t border-zinc-800/40 pt-3">
+                            First verify that your app is updated to the latest build on the App Store or Google Play. If the bug persists, submit a "Bug Report" using the form above including your device model and OS version so our team can diagnose and patch it.
+                        </div>
+                    </details>
 
-            <div class="space-y-4">
-                <details class="group card-glass rounded-2xl cursor-pointer">
-                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
-                        <span>1. What should I do if an App crashes or gestures fail to respond?</span>
-                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
-                    </summary>
-                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
-                        First verify that your app is updated to the latest build on the App Store or Google Play. If the bug persists, submit a "Bug Report" using the form above including your device model and OS version so our team can diagnose and patch it.
-                    </div>
-                </details>
+                    <details class="group bg-zinc-900/60 border border-zinc-800 rounded-xl">
+                        <summary class="flex items-start justify-between gap-3 font-bold text-sm text-gray-200 p-4 cursor-pointer outline-none">
+                            <span class="min-w-0 flex-1 leading-relaxed">2. What is the refund mechanism for paid downloads or in-app purchases?</span>
+                            <span class="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center text-cyan-400 text-xs leading-none transition group-open:rotate-180">▼</span>
+                        </summary>
+                        <div class="text-gray-400 text-xs px-4 pb-4 leading-relaxed border-t border-zinc-800/40 pt-3">
+                            All app purchases and subscription billings are processed directly by Apple App Store or Google Play. For refund requests, submit through reportaproblem.apple.com (for Apple) or your Google Play order history. You can also reach out to our team to help verify purchase records.
+                        </div>
+                    </details>
 
-                <details class="group card-glass rounded-2xl cursor-pointer">
-                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
-                        <span>2. What is the refund mechanism for paid downloads or in-app purchases?</span>
-                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
-                    </summary>
-                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
-                        All app purchases and subscription billings are processed directly by Apple App Store or Google Play. For refund requests, submit through reportaproblem.apple.com (for Apple) or your Google Play order history. You can also reach out to our team to help verify purchase records.
-                    </div>
-                </details>
-
-                <details class="group card-glass rounded-2xl cursor-pointer">
-                    <summary class="flex justify-between items-center font-bold text-white p-6 outline-none">
-                        <span>3. How quickly can I expect a response to support tickets?</span>
-                        <span class="transition group-open:rotate-180 text-cyan-400">▼</span>
-                    </summary>
-                    <div class="text-gray-400 text-sm px-6 pb-6 leading-relaxed">
-                        Messages sent via WhatsApp generally receive responses within a few hours during business hours. For tickets submitted through our web form or email, our engineering team reviews and replies thoroughly within 12 to 24 hours.
-                    </div>
-                </details>
+                    <details class="group bg-zinc-900/60 border border-zinc-800 rounded-xl">
+                        <summary class="flex items-start justify-between gap-3 font-bold text-sm text-gray-200 p-4 cursor-pointer outline-none">
+                            <span class="min-w-0 flex-1 leading-relaxed">3. How quickly can I expect a response to support tickets?</span>
+                            <span class="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center text-cyan-400 text-xs leading-none transition group-open:rotate-180">▼</span>
+                        </summary>
+                        <div class="text-gray-400 text-xs px-4 pb-4 leading-relaxed border-t border-zinc-800/40 pt-3">
+                            Messages sent via WhatsApp generally receive responses within a few hours during business hours. For tickets submitted through our web form or email, our engineering team reviews and replies thoroughly within 12 to 24 hours.
+                        </div>
+                    </details>
+                </div>
             </div>
         </section>
     </main>

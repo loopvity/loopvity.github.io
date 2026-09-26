@@ -154,3 +154,17 @@ html:not(.theme-dark) .category-pill.active {
     color: #ffffff;
     border-color: #06b6d4;
 }
+
+details > summary {
+    list-style: none;
+}
+details > summary::-webkit-details-marker {
+    display: none;
+}
+details > summary > span:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+details > summary > span:last-child {
+    flex-shrink: 0;
+}
